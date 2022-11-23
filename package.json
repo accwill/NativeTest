@@ -11,8 +11,12 @@
     "e2e": "detox test --configuration ios.sim.debug"
   },
   "dependencies": {
+    "@react-navigation/native": "^6.0.14",
+    "@react-navigation/native-stack": "^6.9.2",
     "react": "18.1.0",
-    "react-native": "0.70.6"
+    "react-native": "0.70.6",
+    "react-native-safe-area-context": "^4.4.1",
+    "react-native-screens": "^3.18.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -36,7 +40,9 @@
   "jest": {
     "preset": "react-native",
     "rootDir": ".",
-    "modulePathIgnorePatterns": ["<rootDir>/e2e/"],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/e2e/"
+    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
