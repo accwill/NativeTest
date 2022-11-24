@@ -1,14 +1,16 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 
-const AsyncModal: React.FC<any> = () => {
+import AsyncModal from 'app/components/AsyncModal'
+
+const AsyncModalScreen: React.FC<any> = () => {
   return (
     <View>
-      <Text>AsyncModal</Text>
+      <AsyncModal />
     </View>
   )
 }
 
-AsyncModal.displayName = 'AsyncModal'
+AsyncModalScreen.displayName = 'AsyncModalScreen'
 
-export default AsyncModal
+export default AsyncModalScreen
