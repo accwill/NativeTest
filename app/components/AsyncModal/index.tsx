@@ -12,11 +12,11 @@
  * @Author: Aceh
  * @Date:   2022-11-25 07:45:11
  * @Last Modified by:   aceh
- * @Last Modified time: 2022-11-25 20:26:49
+ * @Last Modified time: 2022-11-25 20:56:56
  */
 import { linkColor } from 'app/constants'
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Animated } from 'react-native'
 
 import Button, { i_ButtonProps } from '../Button'
 import Modal, { i_ModalProps } from './components/Modal'
@@ -53,6 +53,8 @@ const AsyncModal: React.FC<i_AsyncModalProps> = props => {
 
   const md = useModal(modal)
 
+  const scale = React.useRef<Animated.Value>(new Animated.Value(0)).current
+
   const handleCancel: i_ButtonProps['onPress'] = () => {
     if (cancelClose) {
       md.hide()
@@ -67,10 +69,29 @@ const AsyncModal: React.FC<i_AsyncModalProps> = props => {
     md.promise.resolve()
   }
 
+  React.useEffect(() => {
+    return () => {
+      console.log('unmount')
+    }
+  }, [])
+
+  const handleVisibleChange = (visible: boolean) => {
+    console.log('visible', visible)
+    if (visible) {
+      Animated.spring(scale, {
+        toValue: 1,
+        speed: 66,
+        useNativeDriver: true,
+      }).start()
+    } else {
+      scale.setValue(0)
+    }
+  }
+
   return (
-    <Modal {...rest} modal={md}>
+    <Modal {...rest} modal={md} onVisibleChange={handleVisibleChange}>
       <View style={styles.container}>
-        <View style={styles.content}>
+        <Animated.View style={[styles.content, { transform: [{ scale }] }]}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.describe}>{describe}</Text>
 
@@ -90,7 +111,7 @@ const AsyncModal: React.FC<i_AsyncModalProps> = props => {
               {okText}
             </Button>
           </View>
-        </View>
+        </Animated.View>
       </View>
     </Modal>
   )
@@ -139,6 +160,7 @@ const styles = StyleSheet.create({
     color: linkColor,
   },
   action: {
+    height: 41,
     paddingTop: 12,
     paddingBottom: 12,
     alignItems: 'center',
