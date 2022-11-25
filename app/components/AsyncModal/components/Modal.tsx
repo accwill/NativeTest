@@ -2,7 +2,7 @@
  * @Author: Aceh
  * @Date:   2022-11-25 08:19:33
  * @Last Modified by:   aceh
- * @Last Modified time: 2022-11-25 20:49:12
+ * @Last Modified time: 2022-11-25 21:11:09
  */
 import React from 'react'
 import { Modal as MD, ModalProps } from 'react-native'
@@ -14,10 +14,18 @@ export type i_ModalProps = {
   defaultVisible?: boolean
   modal?: i_ModalIns
   onVisibleChange?: (visible: boolean) => void
+  /** 显示时会传递数据进来，通过此方法再向上传输 */
+  showMiddle?: any
 } & ModalProps
 
 const Modal: React.FC<i_ModalProps> = props => {
-  const { defaultVisible = false, children, onVisibleChange, ...rest } = props
+  const {
+    defaultVisible = false,
+    children,
+    onVisibleChange,
+    showMiddle,
+    ...rest
+  } = props
 
   const promiseRef = React.useRef<{ resolve: any; reject: any }>({
     resolve() {},
@@ -40,7 +48,8 @@ const Modal: React.FC<i_ModalProps> = props => {
     })
   }
 
-  const show = () => {
+  const show = (data: any) => {
+    showMiddle?.(data)
     setVisible(true)
     return new Promise<void>((resolve, reject) => {
       promiseRef.resolve = resolve

@@ -2,7 +2,7 @@
  * @Author: Aceh
  * @Date:   2022-11-25 07:28:21
  * @Last Modified by:   aceh
- * @Last Modified time: 2022-11-25 20:01:50
+ * @Last Modified time: 2022-11-25 21:20:19
  */
 import React from 'react'
 import { View } from 'react-native'
@@ -19,7 +19,7 @@ const AsyncModalScreen: React.FC<any> = () => {
       <AsyncModal modal={modal} title="我是标题" describe="我是内容" />
       <Button
         onPress={async () => {
-          await modal.show()
+          await modal.show({ title: '测试' })
           console.log('success')
         }}
       >
