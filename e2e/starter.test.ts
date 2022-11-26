@@ -1,23 +1,30 @@
-import { device, expect } from 'detox'
+import { device, expect, log } from 'detox'
 import { goBack, tapId } from './utils/actions'
 import { elementById, elementByText } from './utils/matchers'
+
+const wait = (time: number) => {
+  return new Promise(resolve => {
+    setTimeout(resolve, time)
+  })
+}
 
 describe('首页导航', () => {
   beforeAll(async () => {
     await device.launchApp()
   })
 
-  beforeEach(async () => {})
-
   it('Toast', async () => {
     await tapId('Toast')
     await expect(elementById('Toast')).toBeVisible()
+    await tapId('showToast')
+    await expect(elementByText('心怀感恩，负重前行')).toBeVisible()
+    log.info.begin('等待Toast关闭')
+    await wait(3000)
+    log.info.end()
     await goBack()
-    // await expect(elementById('ActionSheet')).toBeVisible()
-    // await element(by.text('AsyncModal')).tap()
-    // await element(by.text('Show Modal')).tap()
-    // await element(by.text('取消')).tap()
   })
+
+  beforeEach(async () => {})
 
   it('AsyncModal', async () => {
     await tapId('AsyncModal')

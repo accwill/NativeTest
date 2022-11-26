@@ -1,4 +1,4 @@
 export enum ToastDuration {
-  LONG,
-  SHORT,
+  LONG = 2500,
+  SHORT = 1000,
 }
