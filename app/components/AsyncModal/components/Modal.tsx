@@ -1,8 +1,9 @@
 /**
+ * 基于原Modal封装了显示盒隐藏
  * @Author: Aceh
  * @Date:   2022-11-25 08:19:33
  * @Last Modified by:   aceh
- * @Last Modified time: 2022-11-25 21:11:09
+ * @Last Modified time: 2022-11-26 12:00:18
  */
 import React from 'react'
 import { Modal as MD, ModalProps } from 'react-native'

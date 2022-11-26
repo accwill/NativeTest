@@ -4,12 +4,12 @@ import * as React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { routerConfig } from './router.config'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
 import ErrorBoundary from './components/ErrorBoundary'
 import { LogBox } from 'react-native'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 const Stack = createNativeStackNavigator()
-LogBox.ignoreLogs(['AsyncModal Cancel'])
+LogBox.ignoreLogs(['ModalConfirm Cancel'])
 
 function App() {
   return (

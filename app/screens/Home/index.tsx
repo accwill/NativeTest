@@ -9,6 +9,7 @@ const Home: React.FC<i_RouterParams> = ({ navigation }) => {
       {routerConfig.map(item => (
         <Button
           key={item.name}
+          testID={item.name}
           onPress={() => navigation.navigate(item.name)}
           title={(item.options as any).title || item.name}
         />

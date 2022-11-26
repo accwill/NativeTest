@@ -1,14 +1,39 @@
-import { device, element, by, expect } from 'detox';
+import { device, expect } from 'detox'
+import { goBack, tapId } from './utils/actions'
+import { elementById, elementByText } from './utils/matchers'
 
-describe('Example', () => {
+describe('首页导航', () => {
   beforeAll(async () => {
-    await device.launchApp();
-  });
+    await device.launchApp()
+  })
 
-  beforeEach(async () => {});
+  beforeEach(async () => {})
 
-  it('should test something', async () => {
-    await element(by.id('id')).tap();
-    await expect(element(by.id('id'))).toBeVisible();
-  });
-});
+  it('Toast', async () => {
+    await tapId('Toast')
+    await expect(elementById('Toast')).toBeVisible()
+    await goBack()
+    // await expect(elementById('ActionSheet')).toBeVisible()
+    // await element(by.text('AsyncModal')).tap()
+    // await element(by.text('Show Modal')).tap()
+    // await element(by.text('取消')).tap()
+  })
+
+  it('AsyncModal', async () => {
+    await tapId('AsyncModal')
+    const btn = elementByText('Show Modal')
+    await expect(btn).toBeVisible()
+    await btn.tap()
+    await expect(btn).toBeNotVisible()
+    const okBtn = elementByText('确定')
+    await expect(okBtn).toBeVisible()
+    await okBtn.tap()
+    await goBack()
+  })
+
+  it('Dropdown', async () => {
+    await tapId('Dropdown')
+    await expect(elementById('Dropdown')).toBeVisible()
+    await goBack()
+  })
+})
