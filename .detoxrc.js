@@ -50,11 +50,30 @@ module.exports = {
     emulator: {
       type: 'android.emulator',
       device: {
-        avdName: 'Pixel_3a_API_30_x86'
+        avdName: 'Pixel_6_API_31'
       }
     }
   },
   configurations: {
+    "android.manual": {
+      "device": "emulator",
+      "app": "android.debug",
+      "behavior": {
+        "launchApp": "manual"
+      },
+      "session": {
+        "autoStart": true,
+        "debugSynchronization": 0,
+        "server": "ws://localhost:8099",
+        "sessionId": "test"
+      },
+      "testRunner": {
+        "args": {
+          "testTimeout": 999999
+        }
+      },
+      "artifacts": false
+    },
     'ios.sim.debug': {
       device: 'simulator',
       app: 'ios.debug'

@@ -3,7 +3,7 @@
  * @Author: Aceh
  * @Date:   2022-11-25 08:19:33
  * @Last Modified by:   aceh
- * @Last Modified time: 2022-11-26 12:00:18
+ * @Last Modified time: 2022-11-27 16:39:31
  */
 import React from 'react'
 import { Modal as MD, ModalProps } from 'react-native'
@@ -72,6 +72,13 @@ const Modal: React.FC<i_ModalProps> = props => {
   return (
     <MD
       animationType="fade"
+      supportedOrientations={[
+        'portrait',
+        'portrait-upside-down',
+        'landscape',
+        'landscape-left',
+        'landscape-right',
+      ]}
       {...rest}
       onRequestClose={() => {
         setVisible(false)

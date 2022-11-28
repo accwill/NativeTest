@@ -2,7 +2,7 @@
  * @Author: Aceh
  * @Date:   2022-11-25 21:01:18
  * @Last Modified by:   aceh
- * @Last Modified time: 2022-11-25 21:20:58
+ * @Last Modified time: 2022-11-27 09:02:52
  */
 import { linkColor } from 'app/constants'
 import React from 'react'
@@ -83,6 +83,7 @@ const ModalConfirm: React.FC<i_ModalConfirmProps> = props => {
 
   return (
     <Modal
+      transparent
       {...rest}
       modal={md}
       onVisibleChange={handleVisibleChange}

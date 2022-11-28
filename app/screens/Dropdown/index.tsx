@@ -1,14 +1,15 @@
+import Dropdown from 'app/components/Dropdown'
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 
-const Dropdown: React.FC<any> = () => {
+const DropdownScreen: React.FC<any> = () => {
   return (
-    <View>
-      <Text>Dropdown</Text>
+    <View style={{ flex: 1 }}>
+      <Dropdown />
     </View>
   )
 }
 
-Dropdown.displayName = 'Dropdown'
+DropdownScreen.displayName = 'DropdownScreen'
 
-export default Dropdown
+export default DropdownScreen
