@@ -6,7 +6,6 @@ import {
   FlatList,
   Pressable,
   useWindowDimensions,
-  ScrollView,
   View,
 } from 'react-native'
 import { Modal } from '../AsyncModal'
@@ -92,7 +91,7 @@ const Dropdown: React.FC<i_DropdownProps> = props => {
         onPress={handleShow}
         onPressIn={() => calcPosition()}
       >
-        <Text style={styles.text}>{state?.[labelKey] || '请选择'} &gt;</Text>
+        <Text>{state?.[labelKey] || '请选择'} &gt;</Text>
       </TouchableOpacity>
       <Modal transparent modal={modal} animationType="none">
         <Pressable style={styles.modalContainer} onPress={() => modal.hide()} />
@@ -116,13 +115,9 @@ export default Dropdown
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    // alignSelf: 'flex-start',
   },
   btn: {
     padding: 10,
-  },
-  text: {
-    // color: 'white',
   },
   modalContainer: {
     flex: 1,

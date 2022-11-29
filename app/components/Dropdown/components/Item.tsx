@@ -2,7 +2,7 @@
  * @Author: Aceh
  * @Date:   2022-11-27 10:42:52
  * @Last Modified by:   aceh
- * @Last Modified time: 2022-11-29 12:51:22
+ * @Last Modified time: 2022-11-29 20:16:05
  */
 import Button from 'app/components/Button'
 import React from 'react'
@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     height: 30,
     paddingLeft: 6,
     paddingRight: 6,
+    backgroundColor: 'white',
     justifyContent: 'center',
     borderColor: '#aaa',
     borderBottomWidth: 0.2,
