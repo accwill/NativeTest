@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  View,
   Text,
   TouchableOpacity,
   StyleSheet,
@@ -13,46 +12,33 @@ import { Modal } from '../AsyncModal'
 import { useModal } from '../AsyncModal/hooks'
 import Item from './components/Item'
 
-const DATA = [
-  {
-    value: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    label: 'First Item',
-  },
-  {
-    value: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    label: 'Second Item',
-  },
-  {
-    value: '58694a0f-3da1-471f-bd96-145571e29d72',
-    label: 'Third Item',
-  },
-  {
-    value: '58694a0f-3da1-471f-bd96-145571e29d721',
-    label: 'Third Item1',
-  },
-  {
-    value: '58694a0f-3da1-471f-bd96-145571e29d722',
-    label: 'Third Item2',
-  },
-  {
-    value: '58694a0f-3da1-471f-bd96-145571e29d723',
-    label: 'Third Item3',
-  },
-]
-
 export type i_DropdownProps = {
-  width: number
-  height: number
+  width?: number
+  height?: number
+  data: any[]
+  /**
+   * 默认值为code
+   */
+  codeKey?: string
+  /**
+   * 默认值为label
+   */
+  labelKey?: string
 }
+
 const Dropdown: React.FC<i_DropdownProps> = props => {
-  const { width = 200, height = 100 } = props
+  const {
+    width = 200,
+    height = 100,
+    codeKey = 'value',
+    labelKey = 'label',
+    data,
+  } = props
   const btn = React.useRef<TouchableOpacity>(null)
 
   const modal = useModal()
 
   const { width: ScreenWidth, height: ScreenHeight } = useWindowDimensions()
-
-  const renderItem = ({ item }: any) => <Item title={item.label} />
 
   const [state, setState] = React.useState<{ left: number; top: number }>({
     left: 0,
@@ -103,12 +89,10 @@ const Dropdown: React.FC<i_DropdownProps> = props => {
       <Modal defaultVisible transparent modal={modal} animationType="none">
         <Pressable style={styles.modalContainer} onPress={() => modal.hide()} />
         <FlatList
-          data={DATA}
-          onStartShouldSetResponderCapture={() => true}
-          onStartShouldSetResponder={() => true}
+          data={data}
           style={[styles.list, state, { width, height }]}
-          renderItem={renderItem}
-          keyExtractor={item => item.value}
+          renderItem={({ item }: any) => <Item title={item[labelKey]} />}
+          keyExtractor={(item: any) => item[codeKey]}
         />
       </Modal>
     </ScrollView>
@@ -137,10 +121,10 @@ const styles = StyleSheet.create({
   },
   list: {
     position: 'absolute',
-    backgroundColor: 'green',
     opacity: 0.8,
     borderWidth: 1,
     zIndex: 1000,
     borderColor: 'grey',
+    borderRadius: 5,
   },
 })
