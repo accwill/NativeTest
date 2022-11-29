@@ -7,6 +7,7 @@ import {
   Pressable,
   useWindowDimensions,
   ScrollView,
+  View,
 } from 'react-native'
 import { Modal } from '../AsyncModal'
 import { useModal } from '../AsyncModal/hooks'
@@ -40,7 +41,7 @@ const Dropdown: React.FC<i_DropdownProps> = props => {
 
   const { width: ScreenWidth, height: ScreenHeight } = useWindowDimensions()
 
-  const [state, setState] = React.useState<{ left: number; top: number }>({
+  const [coor, setCoor] = React.useState<{ left: number; top: number }>({
     left: 0,
     top: 0,
   })
@@ -65,7 +66,7 @@ const Dropdown: React.FC<i_DropdownProps> = props => {
         left = pageX + _width - width
       }
 
-      setState({
+      setCoor({
         left: left,
         top: top,
       })
@@ -76,26 +77,35 @@ const Dropdown: React.FC<i_DropdownProps> = props => {
     modal.show()
   }
 
+  const [state, setState] = React.useState()
+
+  const handelSelect = (_data: any) => {
+    setState(_data)
+    modal.hide()
+  }
+
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <TouchableOpacity
         style={styles.btn}
         ref={btn}
         onPress={handleShow}
         onPressIn={() => calcPosition()}
       >
-        <Text style={styles.text}>Dropdown &gt;</Text>
+        <Text style={styles.text}>{state?.[labelKey] || '请选择'} &gt;</Text>
       </TouchableOpacity>
-      <Modal defaultVisible transparent modal={modal} animationType="none">
+      <Modal transparent modal={modal} animationType="none">
         <Pressable style={styles.modalContainer} onPress={() => modal.hide()} />
         <FlatList
           data={data}
-          style={[styles.list, state, { width, height }]}
-          renderItem={({ item }: any) => <Item title={item[labelKey]} />}
+          style={[styles.list, coor, { width, height }]}
+          renderItem={({ item }: any) => (
+            <Item title={item[labelKey]} data={item} onPress={handelSelect} />
+          )}
           keyExtractor={(item: any) => item[codeKey]}
         />
       </Modal>
-    </ScrollView>
+    </View>
   )
 }
 
@@ -109,11 +119,10 @@ const styles = StyleSheet.create({
     // alignSelf: 'flex-start',
   },
   btn: {
-    backgroundColor: 'pink',
     padding: 10,
   },
   text: {
-    color: 'white',
+    // color: 'white',
   },
   modalContainer: {
     flex: 1,

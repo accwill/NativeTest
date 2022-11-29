@@ -2,16 +2,22 @@
  * @Author: Aceh
  * @Date:   2022-11-27 10:42:52
  * @Last Modified by:   aceh
- * @Last Modified time: 2022-11-29 12:29:22
+ * @Last Modified time: 2022-11-29 12:51:22
  */
 import Button from 'app/components/Button'
 import React from 'react'
-import { Text, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 
-const Item: React.FC<any> = ({ title }) => {
+type i_ItemProps = {
+  data: any
+  onPress(data: any): void
+  title: string
+}
+
+const Item: React.FC<i_ItemProps> = ({ title, data, onPress }) => {
   return (
-    <Button style={styles.container}>
-      <Text>{title}</Text>
+    <Button style={styles.container} onPress={() => onPress(data)}>
+      {title}
     </Button>
   )
 }
