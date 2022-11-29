@@ -6,6 +6,8 @@ import {
   StyleSheet,
   FlatList,
   Pressable,
+  useWindowDimensions,
+  ScrollView,
 } from 'react-native'
 import { Modal } from '../AsyncModal'
 import { useModal } from '../AsyncModal/hooks'
@@ -24,6 +26,18 @@ const DATA = [
     value: '58694a0f-3da1-471f-bd96-145571e29d72',
     label: 'Third Item',
   },
+  {
+    value: '58694a0f-3da1-471f-bd96-145571e29d721',
+    label: 'Third Item1',
+  },
+  {
+    value: '58694a0f-3da1-471f-bd96-145571e29d722',
+    label: 'Third Item2',
+  },
+  {
+    value: '58694a0f-3da1-471f-bd96-145571e29d723',
+    label: 'Third Item3',
+  },
 ]
 
 export type i_DropdownProps = {
@@ -31,10 +45,12 @@ export type i_DropdownProps = {
   height: number
 }
 const Dropdown: React.FC<i_DropdownProps> = props => {
-  const { width = 100, height = 100 } = props
+  const { width = 200, height = 100 } = props
   const btn = React.useRef<TouchableOpacity>(null)
 
   const modal = useModal()
+
+  const { width: ScreenWidth, height: ScreenHeight } = useWindowDimensions()
 
   const renderItem = ({ item }: any) => <Item title={item.label} />
 
@@ -44,10 +60,28 @@ const Dropdown: React.FC<i_DropdownProps> = props => {
   })
 
   const calcPosition = () => {
+    /**
+     * x: 表示一个固定位置，会将滚动距离计算在内
+     * y: 表示一个固定位置，会将滚动距离计算在内
+     * pageX: 表示当前元素到顶部的距离，不会把滚动距离计算在内
+     * pageY: 表示当前元素到左侧的距离，不会把滚动距离计算在内
+     */
     btn.current?.measure((x, y, _width, _height, pageX, pageY) => {
+      const isBottom = ScreenHeight - (pageY + _height) > height
+      const isLeft = ScreenWidth - pageX > width
+      let top = pageY + _height
+      let left = pageX
+
+      if (!isBottom) {
+        top = pageY - height
+      }
+      if (!isLeft) {
+        left = pageX + _width - width
+      }
+
       setState({
-        left: pageX,
-        top: pageY + _height,
+        left: left,
+        top: top,
       })
     })
   }
@@ -57,7 +91,7 @@ const Dropdown: React.FC<i_DropdownProps> = props => {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <TouchableOpacity
         style={styles.btn}
         ref={btn}
@@ -68,7 +102,6 @@ const Dropdown: React.FC<i_DropdownProps> = props => {
       </TouchableOpacity>
       <Modal defaultVisible transparent modal={modal} animationType="none">
         <Pressable style={styles.modalContainer} onPress={() => modal.hide()} />
-
         <FlatList
           data={DATA}
           onStartShouldSetResponderCapture={() => true}
@@ -78,7 +111,7 @@ const Dropdown: React.FC<i_DropdownProps> = props => {
           keyExtractor={item => item.value}
         />
       </Modal>
-    </View>
+    </ScrollView>
   )
 }
 
@@ -89,11 +122,7 @@ export default Dropdown
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    flexDirection: 'row',
     // alignSelf: 'flex-start',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
   },
   btn: {
     backgroundColor: 'pink',
